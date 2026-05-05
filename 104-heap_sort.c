@@ -57,7 +57,7 @@ void sift_down(int *array, size_t size, size_t root, size_t end)
  */
 void heap_sort(int *array, size_t size)
 {
-	ssize_t start, end;
+	int start, end;
 
 	if (array == NULL || size < 2)
 		return;
