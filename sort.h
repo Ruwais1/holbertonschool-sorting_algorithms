@@ -36,8 +36,6 @@ void sift_down(int *array, size_t size, size_t root, size_t end);
 
 /* radix sort */
 void radix_sort(int *array, size_t size);
-int get_max(int *array, size_t size);
-void counting_sort(int *array, size_t size, int exp, int *output);
 
 /* helpers */
 void swap_ints(int *a, int *b, int *array, size_t size);
