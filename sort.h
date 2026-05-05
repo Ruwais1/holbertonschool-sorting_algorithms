@@ -1,41 +1,27 @@
-#include "sort.h"
+#ifndef SORT_H
+#define SORT_H
+
+#include <stddef.h>
 
 /**
- * bubble_sort - Sorts an array of integers in ascending order
- *               using the Bubble sort algorithm.
- * @array: The array to be sorted
- * @size: The size of the array
+ * struct listint_s - Doubly linked list node
+ *
+ * @n: Integer stored in the node
+ * @prev: Pointer to the previous element of the list
+ * @next: Pointer to the next element of the list
  */
-void bubble_sort(int *array, size_t size)
+typedef struct listint_s
 {
-	size_t i, len;
-	int temp, swapped;
+	const int n;
+	struct listint_s *prev;
+	struct listint_s *next;
+} listint_t;
 
-	if (array == NULL || size < 2)
-		return;
+/* Provided print functions */
+void print_array(const int *array, size_t size);
+void print_list(const listint_t *list);
 
-	len = size;
-	while (len > 0)
-	{
-		swapped = 0;
-		for (i = 0; i < len - 1; i++)
-		{
-			if (array[i] > array[i + 1])
-			{
-				/* Swap the elements */
-				temp = array[i];
-				array[i] = array[i + 1];
-				array[i + 1] = temp;
-				
-				/* Print the array after each swap */
-				print_array(array, size);
-				
-				swapped = 1;
-			}
-		}
-		/* If no swaps occurred, the array is sorted */
-		if (swapped == 0)
-			break;
-		len--;
-	}
-}
+/* Sorting algorithms */
+void bubble_sort(int *array, size_t size);
+
+#endif /* SORT_H */
