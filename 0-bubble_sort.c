@@ -22,18 +22,13 @@ void bubble_sort(int *array, size_t size)
 		{
 			if (array[i] > array[i + 1])
 			{
-				/* Swap the elements */
 				temp = array[i];
 				array[i] = array[i + 1];
 				array[i + 1] = temp;
-				
-				/* Print the array after each swap */
 				print_array(array, size);
-				
 				swapped = 1;
 			}
 		}
-		/* If no swaps occurred, the array is sorted */
 		if (swapped == 0)
 			break;
 		len--;
