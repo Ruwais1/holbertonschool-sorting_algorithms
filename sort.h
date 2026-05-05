@@ -32,7 +32,6 @@ void counting_sort(int *array, size_t size);
 
 /* heap sort */
 void heap_sort(int *array, size_t size);
-void sift_down(int *array, size_t size, size_t root, size_t end);
 
 /* radix sort */
 void radix_sort(int *array, size_t size);
