@@ -1,73 +1,80 @@
 #include "sort.h"
 
 /**
- * swap_ints - swaps two integers
+ * swap_ints - Swap two integers in an array.
+ * @a: The first integer to swap.
+ * @b: The second integer to swap.
  */
-void swap_ints(int *a, int *b, int *array, size_t size)
+void swap_ints(int *a, int *b)
 {
 	int tmp;
-
-	if (a == b || *a == *b)
-		return;
 
 	tmp = *a;
 	*a = *b;
 	*b = tmp;
-	print_array(array, size);
 }
 
 /**
- * hoare_partition - Hoare partition with last element as pivot
+ * hoare_partition - Order a subset of an array of integers
+ * according to the hoare partition scheme.
+ * @array: The array of integers.
+ * @size: The size of the array.
+ * @left: The starting index of the subset to order.
+ * @right: The ending index of the subset to order.
+ *
+ * Return: The final partition index.
  */
-int hoare_partition(int *array, int low, int high, size_t size)
+int hoare_partition(int *array, size_t size, int left, int right)
 {
-	int pivot = array[high];
-	int i = low;
-	int j = high - 1;
+	int pivot, above, below;
 
-	while (1)
+	pivot = array[right];
+	for (above = left - 1, below = right + 1; ; )
 	{
-		while (i <= high && array[i] < pivot)
-			i++;
+		do {
+			above++;
+		} while (array[above] < pivot);
+		do {
+			below--;
+		} while (array[below] > pivot);
 
-		while (j >= low && array[j] > pivot)
-			j--;
+		if (above >= below)
+			return (above);
 
-		if (i >= j)
-			break;
-
-		swap_ints(&array[i], &array[j], array, size);
-	}
-
-	/* place pivot in correct position */
-	if (array[i] != array[high])
-		swap_ints(&array[i], &array[high], array, size);
-
-	return (i);
-}
-
-/**
- * quick_sort_rec - recursive helper
- */
-void quick_sort_rec(int *array, int low, int high, size_t size)
-{
-	int p;
-
-	if (low < high)
-	{
-		p = hoare_partition(array, low, high, size);
-		quick_sort_rec(array, low, p - 1, size);
-		quick_sort_rec(array, p + 1, high, size);
+		swap_ints(array + above, array + below);
+		print_array(array, size);
 	}
 }
 
 /**
- * quick_sort_hoare - main function
+ * hoare_sort - Implement the quicksort algorithm through recursion.
+ * @array: An array of integers to sort.
+ * @size: The size of the array.
+ * @left: The starting index of the array partition to order.
+ * @right: The ending index of the array partition to order.
+ */
+void hoare_sort(int *array, size_t size, int left, int right)
+{
+	int part;
+
+	if (right - left > 0)
+	{
+		part = hoare_partition(array, size, left, right);
+		hoare_sort(array, size, left, part - 1);
+		hoare_sort(array, size, part, right);
+	}
+}
+
+/**
+ * quick_sort_hoare - Sort an array of integers in ascending
+ * order using the quicksort algorithm.
+ * @array: An array of integers.
+ * @size: The size of the array.
  */
 void quick_sort_hoare(int *array, size_t size)
 {
-	if (!array || size < 2)
+	if (array == NULL || size < 2)
 		return;
 
-	quick_sort_rec(array, 0, size - 1, size);
+	hoare_sort(array, size, 0, size - 1);
 }
