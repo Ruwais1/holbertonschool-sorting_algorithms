@@ -7,7 +7,7 @@ void swap_ints(int *a, int *b, int *array, size_t size)
 {
 	int tmp;
 
-	if (*a == *b)
+	if (a == b || *a == *b)
 		return;
 
 	tmp = *a;
@@ -17,31 +17,33 @@ void swap_ints(int *a, int *b, int *array, size_t size)
 }
 
 /**
- * hoare_partition - Hoare partition scheme
+ * hoare_partition - Hoare partition with last element as pivot
  */
 int hoare_partition(int *array, int low, int high, size_t size)
 {
 	int pivot = array[high];
-	int i = low - 1;
-	int j = high + 1;
+	int i = low;
+	int j = high - 1;
 
 	while (1)
 	{
-		/* move i right */
-		do {
+		while (i <= high && array[i] < pivot)
 			i++;
-		} while (array[i] < pivot);
 
-		/* move j left */
-		do {
+		while (j >= low && array[j] > pivot)
 			j--;
-		} while (array[j] > pivot);
 
 		if (i >= j)
-			return (j);
+			break;
 
 		swap_ints(&array[i], &array[j], array, size);
 	}
+
+	/* place pivot in correct position */
+	if (array[i] != array[high])
+		swap_ints(&array[i], &array[high], array, size);
+
+	return (i);
 }
 
 /**
@@ -54,8 +56,7 @@ void quick_sort_rec(int *array, int low, int high, size_t size)
 	if (low < high)
 	{
 		p = hoare_partition(array, low, high, size);
-
-		quick_sort_rec(array, low, p, size);
+		quick_sort_rec(array, low, p - 1, size);
 		quick_sort_rec(array, p + 1, high, size);
 	}
 }
