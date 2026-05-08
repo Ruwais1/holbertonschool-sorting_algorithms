@@ -648,8 +648,8 @@ Additional algorithms that could be added:
 
 # Authors
 
-* Fahad
-* Shouq
+* Fahad Almidaj
+* Shouq Alqarni
 
 ---
 
